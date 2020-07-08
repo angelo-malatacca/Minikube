@@ -1,3 +1,10 @@
+### Requirements
+* Helm
+* Kubectl
+* Minikube
+
+To install Helm follow **[this](https://helm.sh/docs/intro/install/)** guide.
+
 Passages:
 
 ```
