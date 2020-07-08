@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat-service
+spec:
+  ports:
+  - port: 8090
+    protocol: TCP
+    targetPort: 8090
+  selector:
+    app: tomcat-deployment
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

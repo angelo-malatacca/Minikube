@@ -1,0 +1,80 @@
+master:
+  servicePort: 8080
+  serviceType: NodePort
+  image: "jenkins/jenkins"
+  imagePullPolicy: "Always"
+  useSecurity: true
+
+  adminUser: "admin"
+  rollingUpdate: {}
+  resources:
+    requests:
+      cpu: "50m"
+      memory: "256Mi"
+    limits:
+      cpu: "2000m"
+      memory: "4096Mi"
+  usePodSecurityContext: true
+  targetPort: 8080
+  # Type NodePort for minikube
+  serviceAnnotations: {}
+  deploymentLabels: {}
+  serviceLabels: {}
+  podLabels: {}
+  # NodePort for Jenkins Service
+  nodePort: 32000
+  healthProbes: true
+  healthProbesLivenessTimeout: 5
+  healthProbesReadinessTimeout: 5
+  healthProbeLivenessPeriodSeconds: 10
+  healthProbeReadinessPeriodSeconds: 10
+  healthProbeLivenessFailureThreshold: 5
+  healthProbeReadinessFailureThreshold: 3
+  healthProbeLivenessInitialDelay: 90
+  healthProbeReadinessInitialDelay: 60
+  slaveListenerPort: 50000
+  slaveHostPort:
+  disabledAgentProtocols:
+    - JNLP-connect
+    - JNLP2-connect
+  loadBalancerSourceRanges:
+  - 0.0.0.0/0
+
+  ingress:
+    enabled: false
+    apiVersion: "extensions/v1beta1"
+    labels: {}
+    annotations: {}
+    hostName:
+    tls:
+  backendconfig:
+    enabled: false
+    apiVersion: "extensions/v1beta1"
+    name:
+    labels: {}
+    annotations: {}
+    spec: {}
+ 
+agent:
+  volumes:
+  - type: HostPath
+  hostPath: /var/run/docker.sock
+  mountPath: /var/run/docker.sock
+
+persistence:
+  Enabled: true
+
+storageClass: managed-nfs-storage
+Size: 5Gi
+
+networkPolicy:
+  Enabled: false
+  apiVersion: extensions/v1beta1
+
+rbac:
+  create: true
+  apiVersion: v1beta1
+  
+serviceAccount:
+  name: 
+  annotations: {}
